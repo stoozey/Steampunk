@@ -1,0 +1,83 @@
+﻿namespace Steampunk;
+
+using System.Numerics;
+using OpenTK.Graphics.OpenGL4;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using Steampunk.Ui;
+
+public static class App
+{
+    const string TITLE_DEFAULT = "Steampunk";
+    public const int WIDTH_DEFAULT = 1024;
+    public const int HEIGHT_DEFAULT = 768;
+
+    private static GameWindow gameWindow = new GameWindow(
+        GameWindowSettings.Default,
+        new NativeWindowSettings()
+        {
+            ClientSize = new Vector2i(WIDTH_DEFAULT, HEIGHT_DEFAULT),
+            Title = TITLE_DEFAULT
+        });
+
+    private static Vector2i windowSize = new Vector2i(WIDTH_DEFAULT, HEIGHT_DEFAULT);
+    public static Vector2i WindowSize {
+        get {
+            return windowSize;
+        }
+
+        set {
+            windowSize = value;
+            gameWindow.ClientSize = value;
+        }
+    }
+
+    private static string windowTitle = TITLE_DEFAULT;
+    public static string WindowTitle {
+        get {
+            return windowTitle;
+        }
+
+        set {
+            windowTitle = value;
+            gameWindow.Title = value;
+        }
+    }
+
+    public static void Start()
+    {
+        gameWindow.Run();
+    }
+
+    private void ganeWindow_Load(object sender, EventArgs e)
+    {
+
+    }
+
+    private void gameWindow_RenderFrame(object sender, FrameEventArgs e)
+    {
+
+    }
+
+    private void gameWindow_Resize(object sender, WindowResizeEventArgs e)
+    {
+
+    }
+
+    private void gameWindow_UpdateFrame(object sender, FrameEventArgs e)
+    {
+
+    }
+
+    private void gameWindow_Unload(object sender, EventArgs e)
+    {
+
+    }
+
+    private void gameWindow_KeyDown(object sender, KeyboardKeyEventArgs e)
+    {
+
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "tTfEfBSrnRpaRwa63Ev0Gqhu+idHgVw2J6VBx00smV5YAfgcGXagSIIC/d7UbrpQO2mdLOUSMEES6OVM8YkLWA==",
+  "success": true,
+  "projectFilePath": "/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/Steampunk.csproj",
+  "expectedPackageFiles": [
+    "/Users/jo/.nuget/packages/raylib-cs/6.0.0/raylib-cs.6.0.0.nupkg.sha512",
+    "/Users/jo/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
