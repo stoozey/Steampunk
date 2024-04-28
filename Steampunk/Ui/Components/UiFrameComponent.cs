@@ -1,9 +1,9 @@
 namespace Steampunk.Ui.Components;
 
-using System.Numerics;
+using Steampunk.Numerics;
 using Raylib_cs;
 
-class UiFrameComponent : UiBaseComponent
+public class UiFrameComponent : UiBaseComponent
 {
     public Color BackgroundColour { get; set; }
 
@@ -23,7 +23,7 @@ class UiFrameComponent : UiBaseComponent
         RenderFrame();
     }
 
-    public UiFrameComponent()
+    public UiFrameComponent() : base()
     {
         BackgroundColour = Color.White;
     }

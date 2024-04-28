@@ -1,17 +1,18 @@
 namespace Steampunk.Ui.Components;
 
-using System.Numerics;
+using Steampunk.Numerics;
 using Steampunk.Ui;
 using Raylib_cs;
 
-class UiTextLabelComponent : UiFrameComponent
+public class UiTextLabelComponent : UiFrameComponent
 {
     public string Text { get; set; }
     public Color TextColour { get; set; }
 
-    protected void RenderTextLabel() 
+    protected void RenderTextLabel()
     {
-        Raylib.DrawText(Text, Position.X.Offset, Position.Y.Offset, 20, TextColour); 
+        Vector2<int> absolutePosition = AbsolutePosition;
+        Raylib.DrawText(Text, absolutePosition.X, absolutePosition.Y, 20, TextColour); 
     }
 
     public override void Render()
@@ -20,7 +21,7 @@ class UiTextLabelComponent : UiFrameComponent
         RenderTextLabel();
     }
 
-    public UiTextLabelComponent()
+    public UiTextLabelComponent() : base()
     {
         Text = "";
         TextColour = Color.Black;

@@ -22,3 +22,4 @@
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/TestProject/bin/Debug/net8.0/runtimes/osx-x64/native/libraylib.dylib
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/TestProject/bin/Debug/net8.0/runtimes/win-x64/native/raylib.dll
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/TestProject/bin/Debug/net8.0/runtimes/win-x86/native/raylib.dll
+/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/TestProject/obj/Debug/net8.0/TestProject.sourcelink.json

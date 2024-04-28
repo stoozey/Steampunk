@@ -10,3 +10,4 @@
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/refint/Steampunk.dll
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/Steampunk.pdb
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/ref/Steampunk.dll
+/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/Steampunk.sourcelink.json

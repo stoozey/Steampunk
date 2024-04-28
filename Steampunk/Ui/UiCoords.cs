@@ -1,10 +1,13 @@
 namespace Steampunk.Ui;
 
-class UiCoords
+using Steampunk.Numerics;
+using Steampunk.Ui.Components;
+
+public class UiCoords
 {
     public UiCoord X { get; private set; }
     public UiCoord Y { get; private set; }
-    
+
     public UiCoords(UiCoord x, UiCoord y)
     {
         X = x;

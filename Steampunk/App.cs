@@ -1,16 +1,18 @@
 ﻿namespace Steampunk;
 
-using System.Numerics;
+using Steampunk.Numerics;
 using Raylib_cs;
 using Steampunk.Ui;
 using Steampunk.Ui.Components;
 
 public static class App
 {
-    const string TITLE_DEFAULT = "Steampunk";
-    public const int WIDTH_DEFAULT = 1024;
-    public const int HEIGHT_DEFAULT = 768;
+    public static bool HasStarted { get; private set; } = false;
+    private const string TITLE_DEFAULT = "Steampunk";
+    private const int WIDTH_DEFAULT = 1024;
+    private const int HEIGHT_DEFAULT = 768;
 
+    private static List<UiBaseComponent> uiComponents = new List<UiBaseComponent>();
     private static int windowWidth = WIDTH_DEFAULT;
     public static int WindowWidth {
         get {
@@ -47,23 +49,66 @@ public static class App
         }
     }
 
+    public static void AddUiComponent(UiBaseComponent component)
+    {
+        uiComponents.Add(component);
+    }
+
+    public static void RemoveUiComponent(UiBaseComponent component)
+    {
+        uiComponents.Remove(component);
+    }
+
     public static void Start()
     {
+        if (HasStarted) return;
+        HasStarted = true;
+
         Raylib.InitWindow(windowWidth, windowHeight, windowTitle);
         Raylib.SetTargetFPS(144);
+
+        UiFrameComponent container = new()
+        {
+            Size = new UiCoords(0.5f, 0, 0.5f, 0),
+            Position = new UiCoords(0.5f, 0, 0.5f, 0),
+            Anchor = new Vector2<float>(0.5f, 0.5f),
+            BackgroundColour = Color.Gray
+        };
 
         UiTextLabelComponent label = new()
         {
             Text = "Hello, world!",
-            Size = new UiCoords(0, 256, 0, 64),
+            Position = new UiCoords(0.25f, 0, 0.5f, 0),
+            Size = new UiCoords(0.5f, 0, 0.5f, 0),
+            Anchor = new Vector2<float>(0.25f, 0.5f),
+            Parent = container
         };
+
+        UiFrameComponent cursor = new()
+        {
+            Size = new UiCoords(0, 32, 0, 32),
+            Position = new UiCoords(0.5f, 0, 0.5f, 0),
+            Anchor = new Vector2<float>(0.5f, 0.5f),
+            BackgroundColour = Color.Red
+        };
+
+        AddUiComponent(container);
+        AddUiComponent(label);
+        AddUiComponent(cursor);
 
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(Color.Black);
             
-            label.Render();
+            Cursor.Update();
+            cursor.Position = new UiCoords(0, Cursor.Position.X, 0, Cursor.Position.Y); 
+            
+            foreach (UiBaseComponent component in uiComponents)
+                component.Update();
+
+            foreach (UiBaseComponent component in uiComponents)
+                component.Render();
 
             Raylib.EndDrawing();
         }

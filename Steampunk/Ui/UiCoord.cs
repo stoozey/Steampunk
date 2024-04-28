@@ -1,6 +1,6 @@
 namespace Steampunk.Ui;
 
-class UiCoord
+public class UiCoord
 {
     public float Scale { get; set; } = 0.0f;
     public int Offset { get; set; } = 0;
