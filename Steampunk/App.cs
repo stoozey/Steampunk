@@ -4,7 +4,6 @@ using Steampunk.Numerics;
 using Raylib_cs;
 using Steampunk.Ui;
 using Steampunk.Ui.Components;
-using static ImGuiNET.ImGuiNative;
 using ImGuiNET;
 using rlImGui_cs;
 
@@ -54,11 +53,15 @@ public static class App
 
     public static void AddUiComponent(UiBaseComponent component)
     {
+        if (uiComponents.Contains(component)) return;
+
         uiComponents.Add(component);
     }
 
     public static void RemoveUiComponent(UiBaseComponent component)
     {
+        if (!uiComponents.Contains(component)) return;
+
         uiComponents.Remove(component);
     }
 
@@ -72,43 +75,13 @@ public static class App
 
         rlImGui.Setup(true);
 
-        UiFrameComponent container = new()
-        {
-            Size = new UiCoords(0.5f, 0, 0.5f, 0),
-            Position = new UiCoords(0.5f, 0, 0.5f, 0),
-            Anchor = new Vector2<float>(0.5f, 0.5f),
-            BackgroundColour = Color.Gray
-        };
-
-        UiTextLabelComponent label = new()
-        {
-            Text = "Hello, world!",
-            Position = new UiCoords(0.25f, 0, 0.5f, 0),
-            Size = new UiCoords(0.5f, 0, 0.5f, 0),
-            Anchor = new Vector2<float>(0.25f, 0.5f),
-            Parent = container
-        };
-
-        UiFrameComponent cursor = new()
-        {
-            Size = new UiCoords(0, 32, 0, 32),
-            Position = new UiCoords(0.5f, 0, 0.5f, 0),
-            Anchor = new Vector2<float>(0.5f, 0.5f),
-            BackgroundColour = Color.Red
-        };
-
-        AddUiComponent(container);
-        AddUiComponent(label);
-        AddUiComponent(cursor);
-
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(new Color(0, 0, 0, 0));
             
             Cursor.Update();
-            cursor.Position = new UiCoords(0, Cursor.Position.X, 0, Cursor.Position.Y); 
-            
+  
             foreach (UiBaseComponent component in uiComponents)
                 component.Update();
 
@@ -116,7 +89,7 @@ public static class App
                 component.Render();
 
             rlImGui.Begin();
-            ImGui.Text($"Position: X{Cursor.Position.X}, Y{Cursor.Position.Y}");
+            
             rlImGui.End();
 
             Raylib.EndDrawing();

@@ -5,7 +5,23 @@ using Raylib_cs;
 
 public class UiBaseComponent
 {
-    public UiBaseComponent? Parent { get; set; }
+    private UiBaseComponent? parent;
+    public UiBaseComponent? Parent 
+    {
+        get {
+            return parent;
+        }
+
+        set {
+            UiBaseComponent? oldParent = parent;
+            if (value == oldParent) return;
+
+            parent = value;
+
+            parent?.children.Add(this);
+            oldParent?.children.Remove(this);
+        }
+    }
     public UiCoords Position { get; set; }
     public UiCoords Size { get; set; }
     public Vector2<float> Anchor { get; set; }
@@ -45,6 +61,23 @@ public class UiBaseComponent
 
     protected Rectangle rectangle;
 
+    private List<UiBaseComponent> children = new List<UiBaseComponent>();
+
+    public List<UiBaseComponent> GetChildren() => [.. children];
+    public List<UiBaseComponent> GetDescendants()
+    {
+        List<UiBaseComponent> descendants = new List<UiBaseComponent>();
+        foreach (UiBaseComponent child in children) {
+            descendants.Add(child);
+
+            foreach (UiBaseComponent descendant in child.GetChildren()) {
+                descendants.Add(descendant);
+            }
+        }
+
+        return descendants;
+    }
+
     public virtual void Update() 
     {
         Vector2<int> absolutePosition = AbsolutePosition;
@@ -63,5 +96,12 @@ public class UiBaseComponent
         Position = new UiCoords(0.0f, 0, 0.0f, 0);
         Size = new UiCoords(1.0f, 0, 1.0f, 0);
         Anchor = new Vector2<float>(0.0f, 0.0f);
+
+        App.AddUiComponent(this);
+    }
+
+    ~UiBaseComponent()
+    {
+        App.RemoveUiComponent(this);
     }
 }

@@ -4,10 +4,10 @@ using Steampunk.Numerics;
 using Steampunk.Ui;
 using Raylib_cs;
 
-class UiImageLabelComponent : UiFrameComponent
+public class UiImageLabelComponent : UiFrameComponent
 {
-    private string imagePath;
-    public string ImagePath
+    private string? imagePath;
+    public string? ImagePath
     {
         get {
             return imagePath;
@@ -16,12 +16,8 @@ class UiImageLabelComponent : UiFrameComponent
         set {
             imagePath = value;
 
-            if (texture != null)
-                Raylib.UnloadTexture((Texture2D) texture);
-
-            Image image = Raylib.LoadImage(imagePath);
-            texture = Raylib.LoadTextureFromImage(image);
-            Raylib.UnloadImage(image);
+            if (App.HasStarted)
+                UnloadTexture();
         }
     }
 
@@ -29,13 +25,22 @@ class UiImageLabelComponent : UiFrameComponent
 
     protected void RenderImageLabel()
     {
-        if (texture == null) return;
+        if (ImagePath == null) return;
+
+        if (texture == null)
+        {
+            LoadTexture();
+            return;
+        }
 
         Vector2<int> absolutePosition = AbsolutePosition;
-        Raylib.DrawTexture((Texture2D) texture, absolutePosition.X, absolutePosition.Y, ImageColour);
+        Vector2<int> absoluteSize = AbsoluteSize;
+        Raylib.DrawTexturePro((Texture2D) texture, new Rectangle(0, 0, imageWidth, imageHeight), new Rectangle(absolutePosition.X, absolutePosition.Y, absoluteSize.X, absoluteSize.Y), System.Numerics.Vector2.Zero, 0, ImageColour);
     }
 
     private Texture2D? texture;
+    private int imageWidth;
+    private int imageHeight;
 
     public override void Render()
     {
@@ -43,17 +48,33 @@ class UiImageLabelComponent : UiFrameComponent
         RenderImageLabel();
     }
 
+    private void LoadTexture()
+    {
+        UnloadTexture();
+
+        Image image = Raylib.LoadImage(ImagePath);
+        imageWidth = image.Width;
+        imageHeight = image.Height;
+
+        texture = Raylib.LoadTextureFromImage(image);
+        Raylib.UnloadImage(image);
+    }
+
+    private void UnloadTexture()
+    {
+        if (texture != null)
+            Raylib.UnloadTexture((Texture2D) texture);
+    }
+
     public UiImageLabelComponent() : base()
     {
         texture = null;
-        imagePath = "";
-        ImagePath = "";
+        ImagePath = null;
         ImageColour = Color.White;
     }
 
     ~UiImageLabelComponent()
     {
-        if (texture != null)
-            Raylib.UnloadTexture((Texture2D) texture);
+        UnloadTexture();
     }
 }

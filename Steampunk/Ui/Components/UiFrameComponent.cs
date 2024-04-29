@@ -6,13 +6,14 @@ using Raylib_cs;
 public class UiFrameComponent : UiBaseComponent
 {
     public Color BackgroundColour { get; set; }
+    public float BackgroundRadius { get; set; }
 
     protected void RenderFrame()
     {
         Raylib.DrawRectangleRounded(
             rectangle,
-            1.0f,
-            5,
+            BackgroundRadius,
+            16,
             BackgroundColour);
     }
 
@@ -30,5 +31,6 @@ public class UiFrameComponent : UiBaseComponent
     public UiFrameComponent() : base()
     {
         BackgroundColour = Color.White;
+        BackgroundRadius = 0.0f;
     }
 }

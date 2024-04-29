@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SteampunkEditor")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+db82253c5a4102e89317b04e8594157dedf43163")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6aaeb114fa8035e2db656a3d65d7defa55bd3115")]
 [assembly: System.Reflection.AssemblyProductAttribute("SteampunkEditor")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SteampunkEditor")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
