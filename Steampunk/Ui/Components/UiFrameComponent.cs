@@ -9,7 +9,11 @@ public class UiFrameComponent : UiBaseComponent
 
     protected void RenderFrame()
     {
-        Raylib.DrawRectangleRec(rectangle, BackgroundColour);
+        Raylib.DrawRectangleRounded(
+            rectangle,
+            1.0f,
+            5,
+            BackgroundColour);
     }
 
     public override void Update()
