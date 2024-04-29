@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Steampunk", "Steampunk\Stea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{C3AA38F0-B98E-461C-BE71-51FC82264A86}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rlImGui-cs", "rlImGui-cs", "{5987F222-2BE0-4033-8CE7-FC77EF03A290}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rlImGui", "rlImGui-cs\rlImGui\rlImGui.csproj", "{99CE4D18-8125-47D4-B569-6F94E7026D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteampunkEditor", "SteampunkEditor\SteampunkEditor.csproj", "{DA030927-88F7-4495-8174-5D64EC29B0A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +27,19 @@ Global
 		{C3AA38F0-B98E-461C-BE71-51FC82264A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3AA38F0-B98E-461C-BE71-51FC82264A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3AA38F0-B98E-461C-BE71-51FC82264A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99CE4D18-8125-47D4-B569-6F94E7026D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99CE4D18-8125-47D4-B569-6F94E7026D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99CE4D18-8125-47D4-B569-6F94E7026D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99CE4D18-8125-47D4-B569-6F94E7026D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA030927-88F7-4495-8174-5D64EC29B0A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA030927-88F7-4495-8174-5D64EC29B0A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA030927-88F7-4495-8174-5D64EC29B0A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA030927-88F7-4495-8174-5D64EC29B0A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{99CE4D18-8125-47D4-B569-6F94E7026D62} = {5987F222-2BE0-4033-8CE7-FC77EF03A290}
 	EndGlobalSection
 EndGlobal

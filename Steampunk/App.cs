@@ -4,6 +4,9 @@ using Steampunk.Numerics;
 using Raylib_cs;
 using Steampunk.Ui;
 using Steampunk.Ui.Components;
+using static ImGuiNET.ImGuiNative;
+using ImGuiNET;
+using rlImGui_cs;
 
 public static class App
 {
@@ -67,6 +70,8 @@ public static class App
         Raylib.InitWindow(windowWidth, windowHeight, windowTitle);
         Raylib.SetTargetFPS(144);
 
+        rlImGui.Setup(true);
+
         UiFrameComponent container = new()
         {
             Size = new UiCoords(0.5f, 0, 0.5f, 0),
@@ -99,7 +104,7 @@ public static class App
         while (!Raylib.WindowShouldClose())
         {
             Raylib.BeginDrawing();
-            Raylib.ClearBackground(Color.Black);
+            Raylib.ClearBackground(new Color(0, 0, 0, 0));
             
             Cursor.Update();
             cursor.Position = new UiCoords(0, Cursor.Position.X, 0, Cursor.Position.Y); 
@@ -110,9 +115,14 @@ public static class App
             foreach (UiBaseComponent component in uiComponents)
                 component.Render();
 
+            rlImGui.Begin();
+            ImGui.Text($"Position: X{Cursor.Position.X}, Y{Cursor.Position.Y}");
+            rlImGui.End();
+
             Raylib.EndDrawing();
         }
 
+        rlImGui.Shutdown();
         Raylib.CloseWindow();
     }
 

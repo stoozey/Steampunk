@@ -6,7 +6,7 @@ using Raylib_cs;
 
 class UiImageLabelComponent : UiFrameComponent
 {
-    private string imagePath = "";
+    private string imagePath;
     public string ImagePath
     {
         get {
@@ -35,7 +35,7 @@ class UiImageLabelComponent : UiFrameComponent
         Raylib.DrawTexture((Texture2D) texture, absolutePosition.X, absolutePosition.Y, ImageColour);
     }
 
-    private Texture2D? texture = null;
+    private Texture2D? texture;
 
     public override void Render()
     {
@@ -45,6 +45,8 @@ class UiImageLabelComponent : UiFrameComponent
 
     public UiImageLabelComponent() : base()
     {
+        texture = null;
+        imagePath = "";
         ImagePath = "";
         ImageColour = Color.White;
     }

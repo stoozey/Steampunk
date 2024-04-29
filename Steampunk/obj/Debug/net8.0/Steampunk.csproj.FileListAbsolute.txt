@@ -11,3 +11,6 @@
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/Steampunk.pdb
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/ref/Steampunk.dll
 /Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/Steampunk.sourcelink.json
+/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/bin/Debug/net8.0/rlImGui.dll
+/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/bin/Debug/net8.0/rlImGui.pdb
+/Users/jo/Library/CloudStorage/ProtonDrive-stoozey@protonmail.com/Dev/ProjectSource/C#/Steampunk/Steampunk/obj/Debug/net8.0/Steampunk.csproj.Up2Date

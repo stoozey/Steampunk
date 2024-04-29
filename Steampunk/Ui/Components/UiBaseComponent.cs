@@ -5,7 +5,7 @@ using Raylib_cs;
 
 public class UiBaseComponent
 {
-    public UiBaseComponent? Parent { get; set; } = null;
+    public UiBaseComponent? Parent { get; set; }
     public UiCoords Position { get; set; }
     public UiCoords Size { get; set; }
     public Vector2<float> Anchor { get; set; }
@@ -59,6 +59,7 @@ public class UiBaseComponent
 
     public UiBaseComponent()
     {
+        Parent = null;
         Position = new UiCoords(0.0f, 0, 0.0f, 0);
         Size = new UiCoords(1.0f, 0, 1.0f, 0);
         Anchor = new Vector2<float>(0.0f, 0.0f);

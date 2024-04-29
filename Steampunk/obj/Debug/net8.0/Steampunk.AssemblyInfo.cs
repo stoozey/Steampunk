@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Steampunk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d7010350e7189ab5b857095cfd9cd1a5cd3c75d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e38eaa69ea1bdbc79a4f182de66312f37b764c79")]
 [assembly: System.Reflection.AssemblyProductAttribute("Steampunk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Steampunk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
