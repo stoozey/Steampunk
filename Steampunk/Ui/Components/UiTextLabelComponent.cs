@@ -23,6 +23,7 @@ public class UiTextLabelComponent : UiFrameComponent
 
     public UiTextLabelComponent() : base()
     {
+        Name = "UiTextLabelComponent";
         Text = "";
         TextColour = Color.Black;
     }

@@ -30,6 +30,7 @@ public class UiFrameComponent : UiBaseComponent
 
     public UiFrameComponent() : base()
     {
+        Name = "UiFrameComponent";
         BackgroundColour = Color.White;
         BackgroundRadius = 0.0f;
     }

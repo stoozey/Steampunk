@@ -5,6 +5,7 @@ using Raylib_cs;
 
 public class UiBaseComponent
 {
+    public string Name { get; set; }
     private UiBaseComponent? parent;
     public UiBaseComponent? Parent 
     {
@@ -92,6 +93,7 @@ public class UiBaseComponent
 
     public UiBaseComponent()
     {
+        Name = "UiBaseComponent";
         Parent = null;
         Position = new UiCoords(0.0f, 0, 0.0f, 0);
         Size = new UiCoords(1.0f, 0, 1.0f, 0);

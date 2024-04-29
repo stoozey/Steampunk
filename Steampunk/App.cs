@@ -90,6 +90,27 @@ public static class App
 
             rlImGui.Begin();
             
+            foreach (UiBaseComponent component in uiComponents.Where(c => c.Parent == null))
+            {
+                ShowChildren(component);
+            }
+
+            void ShowChildren(UiBaseComponent component) 
+            {
+                if (ImGui.CollapsingHeader(component.Name))
+                {
+                    ImGui.Indent();
+                    foreach (UiBaseComponent child in component.GetChildren())
+                    {
+                        if (child.GetChildren().Count == 0)
+                            ImGui.Text(child.Name);
+                        else
+                            ShowChildren(child);
+                    }
+                    ImGui.Unindent();
+                }
+            }
+
             rlImGui.End();
 
             Raylib.EndDrawing();

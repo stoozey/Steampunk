@@ -68,6 +68,7 @@ public class UiImageLabelComponent : UiFrameComponent
 
     public UiImageLabelComponent() : base()
     {
+        Name = "UiImageLabelComponent";
         texture = null;
         ImagePath = null;
         ImageColour = Color.White;
