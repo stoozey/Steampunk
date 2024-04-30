@@ -13,7 +13,7 @@ public class UiBaseComponent
     public int Depth
     {
         get {
-            return (depth + (Parent?.Depth ?? 0));
+            return (depth + (Parent?.Depth ?? 0) + 1);
         }
 
         set {

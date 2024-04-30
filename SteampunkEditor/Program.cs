@@ -50,7 +50,7 @@ UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
     Position = UiCoords.FromScale(0.5f, 0.1f),
     Anchor = new Vector2<float>(0.5f, 0.0f),
     Parent = assetBrowserContainer,
-    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0.15f, 0) }
+    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0, 32), Direction = ListLayoutDirection.Horizontal }
 };
 
 UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
@@ -59,7 +59,8 @@ UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
     Size = UiCoords.FromScale(1.0f, 1.0f),
     Parent = assetBrowserLabel,
     ImagePath = "./Resources/Images/Jerma.png",
-    BackgroundColour = Color.DarkGreen
+    BackgroundColour = Color.DarkGreen,
+    Depth = 4
 };
 
 UiImageLabelComponent sidebarLabelBackdrop2 = new UiImageLabelComponent
@@ -69,7 +70,8 @@ UiImageLabelComponent sidebarLabelBackdrop2 = new UiImageLabelComponent
     Size = UiCoords.FromScale(1.0f, 1.0f),
     Parent = assetBrowserLabel,
     ImagePath = "./Resources/Images/Jerma.png",
-    BackgroundColour = Color.DarkPurple
+    BackgroundColour = Color.DarkPurple,
+    Depth = 5
 };
 
 App.WindowTitle = "Steampunk Editor";
