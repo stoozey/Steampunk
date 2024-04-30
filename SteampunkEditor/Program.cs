@@ -4,12 +4,14 @@ using Steampunk;
 using Steampunk.Ui.Components;
 using Steampunk.Ui;
 using Steampunk.Numerics;
+using Steampunk.Ui.ComponentLayouts;
 
 UiFrameComponent container = new UiFrameComponent()
 {
     Name = "Container",
     BackgroundColour = new Color(0, 0, 0, 0)
 };
+
 UiFrameComponent titlebarContainer = new UiFrameComponent()
 {
     Name = "TitlebarContainer",
@@ -35,7 +37,7 @@ UiFrameComponent assetBrowserContainer = new UiFrameComponent()
     Anchor = new Vector2<float>(0.0f, 1.0f),
     Position = UiCoords.FromScale(0.0f, 1.0f),
     BackgroundColour = Color.DarkBlue,
-    Parent = container
+    Parent = container,
 };
 
 UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
@@ -47,7 +49,8 @@ UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
     Size = UiCoords.FromScale(0.5f, 0.2f),
     Position = UiCoords.FromScale(0.5f, 0.1f),
     Anchor = new Vector2<float>(0.5f, 0.0f),
-    Parent = assetBrowserContainer
+    Parent = assetBrowserContainer,
+    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0.15f, 0) }
 };
 
 UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
@@ -55,7 +58,18 @@ UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
     Name = "TheSusGuy",
     Size = UiCoords.FromScale(1.0f, 1.0f),
     Parent = assetBrowserLabel,
-    ImagePath = "/Users/jo/Pictures/FixedJerma(1).png"
+    ImagePath = "./Resources/Images/Jerma.png",
+    BackgroundColour = Color.DarkGreen
+};
+
+UiImageLabelComponent sidebarLabelBackdrop2 = new UiImageLabelComponent
+{
+    Name = "TheSusGuy2",
+    Position = UiCoords.FromScale(0.5f, 0.0f),
+    Size = UiCoords.FromScale(1.0f, 1.0f),
+    Parent = assetBrowserLabel,
+    ImagePath = "./Resources/Images/Jerma.png",
+    BackgroundColour = Color.DarkPurple
 };
 
 App.WindowTitle = "Steampunk Editor";

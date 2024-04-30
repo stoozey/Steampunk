@@ -1,11 +1,28 @@
 namespace Steampunk.Ui.Components;
 
 using Steampunk.Numerics;
+using Steampunk.Ui.ComponentLayouts;
 using Raylib_cs;
 
 public class UiBaseComponent
 {
+    public ComponentLayout Layout { get; set; }
+    public bool Visible { get; set; }
     public string Name { get; set; }
+    private int depth;
+    public int Depth
+    {
+        get {
+            return (depth + (Parent?.Depth ?? 0));
+        }
+
+        set {
+            depth = value;
+
+            if (App.HasStarted)
+                App.SortUiComponents();
+        }
+    }
     private UiBaseComponent? parent;
     public UiBaseComponent? Parent 
     {
@@ -23,8 +40,30 @@ public class UiBaseComponent
             oldParent?.children.Remove(this);
         }
     }
-    public UiCoords Position { get; set; }
-    public UiCoords Size { get; set; }
+    private UiCoords position;
+    public UiCoords Position
+    {
+        get {
+            return position;
+        }
+
+        set {
+            position = value;
+            RegenerateRectangle();
+        }
+    }
+    private UiCoords size;
+    public UiCoords Size
+    {
+        get {
+            return size;
+        }
+
+        set {
+            size = value;
+            RegenerateRectangle();
+        }
+    }
     public Vector2<float> Anchor { get; set; }
 
     public Vector2<int> AbsolutePosition {
@@ -79,24 +118,33 @@ public class UiBaseComponent
         return descendants;
     }
 
-    public virtual void Update() 
+    public void RegenerateRectangle()
     {
         Vector2<int> absolutePosition = AbsolutePosition;
         Vector2<int> absoluteSize = AbsoluteSize;
         rectangle = new Rectangle(absolutePosition.X, absolutePosition.Y, absoluteSize.X, absoluteSize.Y);
+    } 
+
+    public virtual void Update() 
+    {
+        RegenerateRectangle();
+        Layout.Update(this);
     }
 
     public virtual void Render()
     {
-
+        Layout.Render(this);
     }
 
     public UiBaseComponent()
     {
         Name = "UiBaseComponent";
+        Layout = new ComponentLayoutNone();
+        Visible = true;
+        depth = 0;
         Parent = null;
-        Position = new UiCoords(0.0f, 0, 0.0f, 0);
-        Size = new UiCoords(1.0f, 0, 1.0f, 0);
+        position = new UiCoords(0.0f, 0, 0.0f, 0);
+        size = new UiCoords(1.0f, 0, 1.0f, 0);
         Anchor = new Vector2<float>(0.0f, 0.0f);
 
         App.AddUiComponent(this);

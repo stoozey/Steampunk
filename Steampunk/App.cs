@@ -6,6 +6,7 @@ using Steampunk.Ui;
 using Steampunk.Ui.Components;
 using ImGuiNET;
 using rlImGui_cs;
+using System.Linq;
 
 public static class App
 {
@@ -51,11 +52,17 @@ public static class App
         }
     }
 
+    public static void SortUiComponents()
+    {
+        uiComponents.Sort((a, b) => a.Depth.CompareTo(b.Depth));
+    }
+
     public static void AddUiComponent(UiBaseComponent component)
     {
         if (uiComponents.Contains(component)) return;
 
         uiComponents.Add(component);
+        SortUiComponents();
     }
 
     public static void RemoveUiComponent(UiBaseComponent component)
@@ -69,6 +76,8 @@ public static class App
     {
         if (HasStarted) return;
         HasStarted = true;
+
+        SortUiComponents();
 
         Raylib.InitWindow(windowWidth, windowHeight, windowTitle);
         Raylib.SetTargetFPS(144);
