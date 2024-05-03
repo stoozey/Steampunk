@@ -14,7 +14,7 @@ public enum ListLayoutHorizontalAlign {
     Right,
 }
 
-public enum ListLayouVerticalAlign {
+public enum ListLayoutVerticalAlign {
     Top,
     Middle,
     Bottom,
@@ -24,20 +24,21 @@ public class ComponentLayoutList : ComponentLayout
 {
     public ListLayoutDirection Direction { get; set; }
     public ListLayoutHorizontalAlign HorizontalAlign { get; set; }
-    public ListLayouVerticalAlign VerticalAlign { get; set; }
+    public ListLayoutVerticalAlign VerticalAlign { get; set; }
     public UiCoord Spacing { get; set; }
 
     public override void Update(UiBaseComponent component)
     {
-        UiCoords position = UiCoords.Zero;
+        UiCoords position = UiCoords.Zero;//new UiCoords(HorizontalAlign == ListLayoutHorizontalAlign.Left? 0 : (HorizontalAlign == ListLayoutHorizontalAlign.Center? 0.5f : 1), 0, VerticalAlign == ListLayoutVerticalAlign.Top? 0 : (VerticalAlign == ListLayoutVerticalAlign.Middle? 0.5f : 1), 0);
+
         foreach (UiBaseComponent child in component.GetChildren())
         {
-            child.Position = position;
+            child.Position = new UiCoords(position.X, position.Y);
 
             switch (Direction)
             {
                 case ListLayoutDirection.Vertical:
-                    position.Y.Offset += Spacing.Offset;
+                    position.Y.Offset += Spacing.Offset * (VerticalAlign == ListLayoutVerticalAlign.Top? 1 : (VerticalAlign == ListLayoutVerticalAlign.Middle? 2 : 3));
                     position.Y.Scale += Spacing.Scale;
                     break;
                 case ListLayoutDirection.Horizontal:
@@ -47,17 +48,18 @@ public class ComponentLayoutList : ComponentLayout
             }
         }
     }
+
     
     public override void Render(UiBaseComponent component)
     {
         
     }
 
-    public ComponentLayoutList(ListLayoutDirection? direction = null, ListLayoutHorizontalAlign? horizontalAlign = null, ListLayouVerticalAlign? verticalAlign = null, UiCoord? spacing = null) : base()
+    public ComponentLayoutList(ListLayoutDirection? direction = null, ListLayoutHorizontalAlign? horizontalAlign = null, ListLayoutVerticalAlign? verticalAlign = null, UiCoord? spacing = null) : base()
     {
         Direction = (direction ?? ListLayoutDirection.Horizontal);
         HorizontalAlign = (horizontalAlign ?? ListLayoutHorizontalAlign.Left);
-        VerticalAlign = (verticalAlign ?? ListLayouVerticalAlign.Top);
+        VerticalAlign = (verticalAlign ?? ListLayoutVerticalAlign.Top);
         Spacing = (spacing ?? UiCoord.Zero);
     }
 }

@@ -23,9 +23,9 @@ UiFrameComponent titlebarContainer = new UiFrameComponent()
 UiFrameComponent actionMenuContainer = new UiFrameComponent()
 {
     Name = "ActionMenuContainer",
-    Size = UiCoords.FromScale(0.2f, 1f),
-    Position = UiCoords.FromScale(1.0f, 0.0f),
-    Anchor = new Vector2<float>(1.0f, 0.0f),
+    Size = UiCoords.FromScale(0.2f, 0.9f),
+    Position = UiCoords.FromScale(1.0f, 1.0f),
+    Anchor = new Vector2<float>(1.0f, 1.0f),
     BackgroundColour = Color.Beige,
     Parent = container
 };
@@ -33,7 +33,7 @@ UiFrameComponent actionMenuContainer = new UiFrameComponent()
 UiFrameComponent assetBrowserContainer = new UiFrameComponent()
 {
     Name = "AssetBrowserContainer",
-    Size = UiCoords.FromScale(0.2f, 1.0f),
+    Size = UiCoords.FromScale(0.2f, 0.9f),
     Anchor = new Vector2<float>(0.0f, 1.0f),
     Position = UiCoords.FromScale(0.0f, 1.0f),
     BackgroundColour = Color.DarkBlue,
@@ -50,29 +50,64 @@ UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
     Position = UiCoords.FromScale(0.5f, 0.1f),
     Anchor = new Vector2<float>(0.5f, 0.0f),
     Parent = assetBrowserContainer,
-    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0, 32), Direction = ListLayoutDirection.Horizontal }
+    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0.6f, 0), Direction = ListLayoutDirection.Horizontal }
 };
 
 UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
 {
     Name = "TheSusGuy",
-    Size = UiCoords.FromScale(1.0f, 1.0f),
     Parent = assetBrowserLabel,
     ImagePath = "./Resources/Images/Jerma.png",
     BackgroundColour = Color.DarkGreen,
-    Depth = 4
+    Active = true
+};
+
+sidebarLabelBackdrop.Active = true;
+sidebarLabelBackdrop.OnMouseEnterEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop.Name + " entered");
+};
+sidebarLabelBackdrop.OnMouseExitEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop.Name + " exited");
+};
+sidebarLabelBackdrop.OnClickStartEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop.Name + " clicked");
+};
+sidebarLabelBackdrop.OnClickReleaseEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop.Name + " released");
 };
 
 UiImageLabelComponent sidebarLabelBackdrop2 = new UiImageLabelComponent
 {
     Name = "TheSusGuy2",
     Position = UiCoords.FromScale(0.5f, 0.0f),
-    Size = UiCoords.FromScale(1.0f, 1.0f),
     Parent = assetBrowserLabel,
     ImagePath = "./Resources/Images/Jerma.png",
     BackgroundColour = Color.DarkPurple,
-    Depth = 5
+    Active = true
 };
 
+sidebarLabelBackdrop2.OnMouseEnterEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop2.Name + " entered");
+};
+sidebarLabelBackdrop2.OnMouseExitEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop2.Name + " exited");
+};
+sidebarLabelBackdrop2.OnClickStartEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop2.Name + " clicked");
+};
+sidebarLabelBackdrop2.OnClickReleaseEvent += () => {
+    Console.WriteLine(sidebarLabelBackdrop2.Name + " released");
+};
+
+void Update(float deltaTime)
+{
+
+}
+
+void Render(float deltaTime)
+{
+
+}
+
 App.WindowTitle = "Steampunk Editor";
-App.Start();
+App.Start(Update, Render);

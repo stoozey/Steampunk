@@ -22,8 +22,8 @@ public class UiCoords
 
     public UiCoords(UiCoord x, UiCoord y)
     {
-        X = x;
-        Y = y;
+        X = new UiCoord(x.Scale, x.Offset);
+        Y = new UiCoord(y.Scale, y.Offset);
     }
 
     public UiCoords(float xScale, int xOffset, float yScale, int yOffset)
