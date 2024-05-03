@@ -53,50 +53,14 @@ UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
     Layout = new ComponentLayoutList() { Spacing = new UiCoord(0.6f, 0), Direction = ListLayoutDirection.Horizontal }
 };
 
-UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
-{
-    Name = "TheSusGuy",
-    Parent = assetBrowserLabel,
-    ImagePath = "./Resources/Images/Jerma.png",
-    BackgroundColour = Color.DarkGreen,
-    Active = true
+Dictionary<long, UiBaseComponent> components = new Dictionary<long, UiBaseComponent>();
+
+App.OnComponentAddedEvent += (UiBaseComponent component) => {
+    Console.WriteLine("Added component: " + component.Name);
 };
 
-sidebarLabelBackdrop.Active = true;
-sidebarLabelBackdrop.OnMouseEnterEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop.Name + " entered");
-};
-sidebarLabelBackdrop.OnMouseExitEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop.Name + " exited");
-};
-sidebarLabelBackdrop.OnClickStartEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop.Name + " clicked");
-};
-sidebarLabelBackdrop.OnClickReleaseEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop.Name + " released");
-};
-
-UiImageLabelComponent sidebarLabelBackdrop2 = new UiImageLabelComponent
-{
-    Name = "TheSusGuy2",
-    Position = UiCoords.FromScale(0.5f, 0.0f),
-    Parent = assetBrowserLabel,
-    ImagePath = "./Resources/Images/Jerma.png",
-    BackgroundColour = Color.DarkPurple,
-    Active = true
-};
-
-sidebarLabelBackdrop2.OnMouseEnterEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop2.Name + " entered");
-};
-sidebarLabelBackdrop2.OnMouseExitEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop2.Name + " exited");
-};
-sidebarLabelBackdrop2.OnClickStartEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop2.Name + " clicked");
-};
-sidebarLabelBackdrop2.OnClickReleaseEvent += () => {
-    Console.WriteLine(sidebarLabelBackdrop2.Name + " released");
+App.OnComponentRemovedEvent += (UiBaseComponent component) => {
+    Console.WriteLine("Removed component: " + component.Name);
 };
 
 void Update(float deltaTime)
@@ -106,7 +70,6 @@ void Update(float deltaTime)
 
 void Render(float deltaTime)
 {
-
 }
 
 App.WindowTitle = "Steampunk Editor";
