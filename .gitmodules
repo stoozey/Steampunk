@@ -1,3 +1,4 @@
 [submodule "rlImGui-cs"]
 	path = rlImGui-cs
 	url = https://github.com/raylib-extras/rlImGui-cs.git
+	ignore = dirty
