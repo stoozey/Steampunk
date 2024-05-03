@@ -24,8 +24,12 @@ public class UiBaseComponent
     public event OnChildRemoved OnChildRemovedEvent;
     public event OnDestroyed OnDestroyedEvent;
     public event OnVisibleChanged OnVisibleChangedEvent;
-    public bool IsMouseOver { get; set; } = false;
-    public bool IsMouseDown { get; set; } = false;
+    public bool IsMouseOver {
+        get {
+            return (Cursor.HoveringComponent == this);
+        }
+    }
+    public bool IsMouseDown { get; protected set; }
     public bool Active { get; set; }
     public ComponentLayout? Layout { get; set; }
     public bool Visible { get; set; }
@@ -120,7 +124,7 @@ public class UiBaseComponent
         }
     }
 
-    protected Rectangle rectangle;
+    public Rectangle Rectangle { get; protected set; }
 
     private List<UiBaseComponent> children = new List<UiBaseComponent>();
 
@@ -143,30 +147,26 @@ public class UiBaseComponent
     {
         Vector2<int> absolutePosition = AbsolutePosition;
         Vector2<int> absoluteSize = AbsoluteSize;
-        rectangle = new Rectangle(absolutePosition.X, absolutePosition.Y, absoluteSize.X, absoluteSize.Y);
+        Rectangle = new Rectangle(absolutePosition.X, absolutePosition.Y, absoluteSize.X, absoluteSize.Y);
     } 
 
     private void CheckForMouse()
     {
         if (!Active) return;
 
-        // update mouse enter/exit events
-        bool isMouseOverLast = IsMouseOver;
-        IsMouseOver = Raylib.CheckCollisionRecs(rectangle, Cursor.Rectangle);
-
-        if ((!isMouseOverLast) && (IsMouseOver))
-            OnMouseEnterEvent.Invoke();
-        else if ((isMouseOverLast) && (!IsMouseOver))
-            OnMouseExitEvent.Invoke();
-
         // update mouse down/released events
-        bool isMouseDownLast = IsMouseDown;
-        IsMouseDown = (IsMouseDown && Raylib.IsMouseButtonDown(MouseButton.Left));
-
-        if ((!IsMouseOver) && (Raylib.IsMouseButtonPressed(MouseButton.Left)))
+        bool mouseDownLast = IsMouseDown;
+        if ((IsMouseOver) && (Raylib.IsMouseButtonPressed(MouseButton.Left)))
+        {
+            IsMouseDown = true;
             OnClickStartEvent.Invoke();
-        else if ((IsMouseOver) && (Raylib.IsMouseButtonReleased(MouseButton.Left)))
+        }
+        
+        if ((Raylib.IsMouseButtonReleased(MouseButton.Left)))
+        {
+            IsMouseDown = false;
             OnClickReleaseEvent.Invoke();
+        }
     }
 
     public virtual void Update() 
@@ -185,7 +185,7 @@ public class UiBaseComponent
     public UiBaseComponent()
     {
         Id = App.GenerateComponentId();
-        Active = false;
+        Active = true;
         Name = "UiBaseComponent";
         Layout = null;
         Visible = true;
@@ -194,6 +194,7 @@ public class UiBaseComponent
         position = new UiCoords(0.0f, 0, 0.0f, 0);
         size = new UiCoords(1.0f, 0, 1.0f, 0);
         Anchor = new Vector2<float>(0.0f, 0.0f);
+        IsMouseDown = false;
 
         OnClickStartEvent += () => { };
         OnClickReleaseEvent += () => { };

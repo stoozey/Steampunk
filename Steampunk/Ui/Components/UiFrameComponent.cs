@@ -11,7 +11,7 @@ public class UiFrameComponent : UiBaseComponent
     protected void RenderFrame()
     {
         Raylib.DrawRectangleRounded(
-            rectangle,
+            Rectangle,
             BackgroundRadius,
             16,
             BackgroundColour);

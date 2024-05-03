@@ -58,6 +58,8 @@ public static class App
         }
     }
 
+    public static List<UiBaseComponent> GetAllComponents() => new List<UiBaseComponent>(uiComponents);
+
     public static long GenerateComponentId()
     {
         return currentComponentId++;
@@ -85,7 +87,7 @@ public static class App
         OnComponentRemovedEvent.Invoke(component);
     }
 
-    public static void Start(Action<float> update, Action<float> render)
+    public static void Start(Action<float>? update = null, Action<float>? render = null, Action<float>? renderImGui = null)
     {
         if (HasStarted) return;
         HasStarted = true;
@@ -105,7 +107,7 @@ public static class App
             Cursor.Update();
 
             float deltaTime = Raylib.GetFrameTime();
-            update(deltaTime);
+            update?.Invoke(deltaTime);
   
             foreach (UiBaseComponent component in uiComponents)
                 component.Update();
@@ -115,6 +117,8 @@ public static class App
 
             foreach (UiBaseComponent component in uiComponents)
             {
+                if (!component.IsMouseOver) continue;
+
                 int posX = component.AbsolutePosition.X;
                 int posY = component.AbsolutePosition.Y;
                 int sizeX = component.AbsoluteSize.X;
@@ -123,10 +127,10 @@ public static class App
                 Raylib.DrawText(component.Name, posX, posY, 16, Color.Red);
             }
 
-            render(deltaTime);
+            render?.Invoke(deltaTime);
 
             rlImGui.Begin();
-            
+
             static void ShowChildren(UiBaseComponent component) 
             {
                 if (ImGui.CollapsingHeader(component.Name))
@@ -142,9 +146,11 @@ public static class App
                     ImGui.Unindent();
                 }
             }
-
+            
             foreach (UiBaseComponent component in uiComponents.Where(c => c.Parent == null))
                 ShowChildren(component);
+
+            renderImGui?.Invoke(deltaTime);
 
             rlImGui.End();
 

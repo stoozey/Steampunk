@@ -7,6 +7,7 @@ using Raylib_cs;
 public class UiTextLabelComponent : UiFrameComponent
 {
     public string Text { get; set; }
+    public bool AutoTextSize { get; set; }
     public Color TextColour { get; set; }
 
     protected void RenderTextLabel()
@@ -25,6 +26,7 @@ public class UiTextLabelComponent : UiFrameComponent
     {
         Name = "UiTextLabelComponent";
         Text = "";
+        AutoTextSize = false;
         TextColour = Color.Black;
     }
 }
