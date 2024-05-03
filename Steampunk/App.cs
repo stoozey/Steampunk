@@ -6,13 +6,20 @@ using Steampunk.Ui;
 using Steampunk.Ui.Components;
 using ImGuiNET;
 using rlImGui_cs;
+using System.Linq;
+
+public delegate void OnComponentAdded(UiBaseComponent component);
+public delegate void OnComponentRemoved(UiBaseComponent component);
 
 public static class App
 {
+    public static event OnComponentAdded OnComponentAddedEvent;
+    public static event OnComponentRemoved OnComponentRemovedEvent;
     public static bool HasStarted { get; private set; } = false;
     private const string TITLE_DEFAULT = "Steampunk";
     private const int WIDTH_DEFAULT = 1024;
     private const int HEIGHT_DEFAULT = 768;
+    private static long currentComponentId = 0;
 
     private static List<UiBaseComponent> uiComponents = new List<UiBaseComponent>();
     private static int windowWidth = WIDTH_DEFAULT;
@@ -51,11 +58,23 @@ public static class App
         }
     }
 
+    public static long GenerateComponentId()
+    {
+        return currentComponentId++;
+    }
+
+    public static void SortUiComponents()
+    {
+        uiComponents.Sort((a, b) => a.Depth.CompareTo(b.Depth));
+    }
+
     public static void AddUiComponent(UiBaseComponent component)
     {
         if (uiComponents.Contains(component)) return;
 
         uiComponents.Add(component);
+        SortUiComponents();
+        OnComponentAddedEvent.Invoke(component);
     }
 
     public static void RemoveUiComponent(UiBaseComponent component)
@@ -63,12 +82,15 @@ public static class App
         if (!uiComponents.Contains(component)) return;
 
         uiComponents.Remove(component);
+        OnComponentRemovedEvent.Invoke(component);
     }
 
-    public static void Start()
+    public static void Start(Action<float> update, Action<float> render)
     {
         if (HasStarted) return;
         HasStarted = true;
+
+        SortUiComponents();
 
         Raylib.InitWindow(windowWidth, windowHeight, windowTitle);
         Raylib.SetTargetFPS(144);
@@ -81,6 +103,9 @@ public static class App
             Raylib.ClearBackground(new Color(0, 0, 0, 0));
             
             Cursor.Update();
+
+            float deltaTime = Raylib.GetFrameTime();
+            update(deltaTime);
   
             foreach (UiBaseComponent component in uiComponents)
                 component.Update();
@@ -88,14 +113,21 @@ public static class App
             foreach (UiBaseComponent component in uiComponents)
                 component.Render();
 
-            rlImGui.Begin();
-            
-            foreach (UiBaseComponent component in uiComponents.Where(c => c.Parent == null))
+            foreach (UiBaseComponent component in uiComponents)
             {
-                ShowChildren(component);
+                int posX = component.AbsolutePosition.X;
+                int posY = component.AbsolutePosition.Y;
+                int sizeX = component.AbsoluteSize.X;
+                int sizeY = component.AbsoluteSize.Y;
+                Raylib.DrawRectangleLines(posX, posY, sizeX, sizeY, Color.Red);
+                Raylib.DrawText(component.Name, posX, posY, 16, Color.Red);
             }
 
-            void ShowChildren(UiBaseComponent component) 
+            render(deltaTime);
+
+            rlImGui.Begin();
+            
+            static void ShowChildren(UiBaseComponent component) 
             {
                 if (ImGui.CollapsingHeader(component.Name))
                 {
@@ -111,6 +143,9 @@ public static class App
                 }
             }
 
+            foreach (UiBaseComponent component in uiComponents.Where(c => c.Parent == null))
+                ShowChildren(component);
+
             rlImGui.End();
 
             Raylib.EndDrawing();
@@ -123,5 +158,11 @@ public static class App
     private static void RefreshWindowSize()
     {
         Raylib.SetWindowSize(windowWidth, windowHeight);
+    }
+
+    static App()
+    {
+        OnComponentAddedEvent += (UiBaseComponent component) => { };
+        OnComponentRemovedEvent += (UiBaseComponent component) => { };
     }
 }

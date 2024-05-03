@@ -4,12 +4,14 @@ using Steampunk;
 using Steampunk.Ui.Components;
 using Steampunk.Ui;
 using Steampunk.Numerics;
+using Steampunk.Ui.ComponentLayouts;
 
 UiFrameComponent container = new UiFrameComponent()
 {
     Name = "Container",
     BackgroundColour = new Color(0, 0, 0, 0)
 };
+
 UiFrameComponent titlebarContainer = new UiFrameComponent()
 {
     Name = "TitlebarContainer",
@@ -21,9 +23,9 @@ UiFrameComponent titlebarContainer = new UiFrameComponent()
 UiFrameComponent actionMenuContainer = new UiFrameComponent()
 {
     Name = "ActionMenuContainer",
-    Size = UiCoords.FromScale(0.2f, 1f),
-    Position = UiCoords.FromScale(1.0f, 0.0f),
-    Anchor = new Vector2<float>(1.0f, 0.0f),
+    Size = UiCoords.FromScale(0.2f, 0.9f),
+    Position = UiCoords.FromScale(1.0f, 1.0f),
+    Anchor = new Vector2<float>(1.0f, 1.0f),
     BackgroundColour = Color.Beige,
     Parent = container
 };
@@ -31,11 +33,11 @@ UiFrameComponent actionMenuContainer = new UiFrameComponent()
 UiFrameComponent assetBrowserContainer = new UiFrameComponent()
 {
     Name = "AssetBrowserContainer",
-    Size = UiCoords.FromScale(0.2f, 1.0f),
+    Size = UiCoords.FromScale(0.2f, 0.9f),
     Anchor = new Vector2<float>(0.0f, 1.0f),
     Position = UiCoords.FromScale(0.0f, 1.0f),
     BackgroundColour = Color.DarkBlue,
-    Parent = container
+    Parent = container,
 };
 
 UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
@@ -47,16 +49,28 @@ UiTextLabelComponent assetBrowserLabel = new UiTextLabelComponent()
     Size = UiCoords.FromScale(0.5f, 0.2f),
     Position = UiCoords.FromScale(0.5f, 0.1f),
     Anchor = new Vector2<float>(0.5f, 0.0f),
-    Parent = assetBrowserContainer
+    Parent = assetBrowserContainer,
+    Layout = new ComponentLayoutList() { Spacing = new UiCoord(0.6f, 0), Direction = ListLayoutDirection.Horizontal }
 };
 
-UiImageLabelComponent sidebarLabelBackdrop = new UiImageLabelComponent
-{
-    Name = "TheSusGuy",
-    Size = UiCoords.FromScale(1.0f, 1.0f),
-    Parent = assetBrowserLabel,
-    ImagePath = "/Users/jo/Pictures/FixedJerma(1).png"
+Dictionary<long, UiBaseComponent> components = new Dictionary<long, UiBaseComponent>();
+
+App.OnComponentAddedEvent += (UiBaseComponent component) => {
+    Console.WriteLine("Added component: " + component.Name);
 };
+
+App.OnComponentRemovedEvent += (UiBaseComponent component) => {
+    Console.WriteLine("Removed component: " + component.Name);
+};
+
+void Update(float deltaTime)
+{
+
+}
+
+void Render(float deltaTime)
+{
+}
 
 App.WindowTitle = "Steampunk Editor";
-App.Start();
+App.Start(Update, Render);

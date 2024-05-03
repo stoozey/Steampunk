@@ -4,6 +4,10 @@
     <ProjectReference Include="..\Steampunk\Steampunk.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources/" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
