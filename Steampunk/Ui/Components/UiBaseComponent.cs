@@ -34,6 +34,7 @@ public class UiBaseComponent
     public ComponentLayout? Layout { get; set; }
     public bool Visible { get; set; }
     public string Name { get; set; }
+    private bool destroyed;
     private int depth;
     public int Depth
     {
@@ -63,6 +64,9 @@ public class UiBaseComponent
 
             parent?.children.Add(this);
             oldParent?.children.Remove(this);
+
+            if (parent != null) parent.OnDestroyedEvent += () => Destroy();
+            if (oldParent != null) oldParent.OnDestroyedEvent -= () => Destroy();
         }
     }
     private UiCoords position;
@@ -143,6 +147,16 @@ public class UiBaseComponent
         return descendants;
     }
 
+    public void Destroy()
+    {
+        if (destroyed) return;
+        destroyed = true;
+
+        Parent = null;
+        App.RemoveUiComponent(this);
+        this.OnDestroyedEvent.Invoke();
+    }
+
     public void RegenerateRectangle()
     {
         Vector2<int> absolutePosition = AbsolutePosition;
@@ -184,6 +198,7 @@ public class UiBaseComponent
 
     public UiBaseComponent()
     {
+        destroyed = false;
         Id = App.GenerateComponentId();
         Active = true;
         Name = "UiBaseComponent";
@@ -210,6 +225,6 @@ public class UiBaseComponent
 
     ~UiBaseComponent()
     {
-        App.RemoveUiComponent(this);
+        Destroy();
     }
 }

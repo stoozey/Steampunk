@@ -99,8 +99,11 @@ void RenderImGui(float deltaTime)
         {
             if (ImGui.BeginMenu("File"))
             {
+                if (ImGui.MenuItem("Poop"))
+                    container.Destroy();
+                
                 if (ImGui.MenuItem("Exit"))
-                {}
+                    App.Close();
 
                 ImGui.EndMenu();
             }

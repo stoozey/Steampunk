@@ -20,6 +20,7 @@ public static class App
     private const int WIDTH_DEFAULT = 1024;
     private const int HEIGHT_DEFAULT = 768;
     private static long currentComponentId = 0;
+    private static bool closed = false;
 
     private static List<UiBaseComponent> uiComponents = new List<UiBaseComponent>();
     private static int windowWidth = WIDTH_DEFAULT;
@@ -56,6 +57,11 @@ public static class App
             windowTitle = value;
             Raylib.SetWindowTitle(windowTitle);
         }
+    }
+
+    public static void Close()
+    {
+        closed = true;
     }
 
     public static List<UiBaseComponent> GetAllComponents() => new List<UiBaseComponent>(uiComponents);
@@ -99,7 +105,7 @@ public static class App
 
         rlImGui.Setup(true);
 
-        while (!Raylib.WindowShouldClose())
+        while ((!closed) && (!Raylib.WindowShouldClose()))
         {
             Raylib.BeginDrawing();
             Raylib.ClearBackground(new Color(0, 0, 0, 0));
