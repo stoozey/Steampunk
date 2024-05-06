@@ -122,8 +122,8 @@ public class UiBaseComponent
                 baseSize = Parent.AbsoluteSize;
             }
 
-            int width = (int) (baseSize.X * Size.X.Scale) + Size.X.Offset;
-            int height = (int) (baseSize.Y * Size.Y.Scale) + Size.Y.Offset;
+            int width = (int) ((baseSize.X * Size.X.Scale) + Size.X.Offset);
+            int height = (int) ((baseSize.Y * Size.Y.Scale) + Size.Y.Offset);
             return new Vector2<int>(width, height);
         }
     }
@@ -145,6 +145,24 @@ public class UiBaseComponent
         }
 
         return descendants;
+    }
+    // returns a UiCoords where the offset is the pixel position of the mouse relative to the UiBaseComponent,
+    // and the scale is the scale of the percentage of the UiBaseComponent the mouse is over
+    public UiCoords GetMouseUiCoords(bool clamped = true)
+    {
+        Vector2<int> mousePosition = Cursor.Position;
+        Vector2<int> absolutePosition = AbsolutePosition;
+        Vector2<int> absoluteSize = AbsoluteSize;
+        float scaleX = (mousePosition.X - absolutePosition.X) / absoluteSize.X;
+        float scaleY = (mousePosition.Y - absolutePosition.Y) / absoluteSize.Y;
+        if (clamped) {
+            scaleX = Math.Clamp(scaleX, 0, 1);
+            scaleY = Math.Clamp(scaleY, 0, 1);
+        }
+
+        int offsetX = (int) (scaleX * absoluteSize.X);
+        int offsetY = (int) (scaleY * absoluteSize.Y);
+        return new UiCoords(scaleX, offsetX, scaleY, offsetY);
     }
 
     public void Destroy()

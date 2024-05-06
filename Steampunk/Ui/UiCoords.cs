@@ -7,6 +7,8 @@ public class UiCoords
 {
     public UiCoord X { get; private set; }
     public UiCoord Y { get; private set; }
+    public UiCoords Scale => new UiCoords(X.Scale, 0, Y.Scale, 0);
+    public UiCoords Offset => new UiCoords(0, X.Offset, 0, Y.Offset);
 
     public static UiCoords Zero => new UiCoords(UiCoord.Zero, UiCoord.Zero);
 

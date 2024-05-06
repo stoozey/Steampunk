@@ -70,6 +70,8 @@ UiTextLabelComponent newComponentLabel = new UiTextLabelComponent()
 };
 
 Dictionary<long, UiBaseComponent> components = new Dictionary<long, UiBaseComponent>();
+foreach (UiBaseComponent component in App.GetAllComponents())
+    components.Add(component.Id, component);
 
 App.OnComponentAddedEvent += (UiBaseComponent component) => {
     Console.WriteLine("Added component: " + component.Name);
@@ -88,7 +90,18 @@ void Update(float deltaTime)
 
 void Render(float deltaTime)
 {
+    foreach (var item in components)
+    {
+        UiBaseComponent component = item.Value;
+        if (!component.IsMouseOver) continue;
 
+        int posX = component.AbsolutePosition.X;
+        int posY = component.AbsolutePosition.Y;
+        int sizeX = component.AbsoluteSize.X;
+        int sizeY = component.AbsoluteSize.Y;
+        Raylib.DrawRectangleLines(posX, posY, sizeX, sizeY, Color.White);
+        //Raylib.DrawText(component.Name, posX, posY, 16, Color.Red);
+    }
 }
 
 void RenderImGui(float deltaTime)

@@ -23,6 +23,8 @@ public static class App
     private static bool closed = false;
 
     private static List<UiBaseComponent> uiComponents = new List<UiBaseComponent>();
+    private static Dictionary<long, UiBaseComponent> uiComponentsById = new Dictionary<long,UiBaseComponent>();
+
     private static int windowWidth = WIDTH_DEFAULT;
     public static int WindowWidth {
         get {
@@ -64,6 +66,12 @@ public static class App
         closed = true;
     }
 
+    public static UiBaseComponent? GetComponent(long id)
+    {
+        uiComponentsById.TryGetValue(id, out UiBaseComponent? component);
+        return component;
+    }
+
     public static List<UiBaseComponent> GetAllComponents() => new List<UiBaseComponent>(uiComponents);
 
     public static long GenerateComponentId()
@@ -81,7 +89,9 @@ public static class App
         if (uiComponents.Contains(component)) return;
 
         uiComponents.Add(component);
+        uiComponentsById[component.Id] = component;
         SortUiComponents();
+
         OnComponentAddedEvent.Invoke(component);
     }
 
@@ -90,6 +100,8 @@ public static class App
         if (!uiComponents.Contains(component)) return;
 
         uiComponents.Remove(component);
+        uiComponentsById.Remove(component.Id);
+
         OnComponentRemovedEvent.Invoke(component);
     }
 
@@ -120,18 +132,6 @@ public static class App
 
             foreach (UiBaseComponent component in uiComponents)
                 component.Render();
-
-            foreach (UiBaseComponent component in uiComponents)
-            {
-                if (!component.IsMouseOver) continue;
-
-                int posX = component.AbsolutePosition.X;
-                int posY = component.AbsolutePosition.Y;
-                int sizeX = component.AbsoluteSize.X;
-                int sizeY = component.AbsoluteSize.Y;
-                Raylib.DrawRectangleLines(posX, posY, sizeX, sizeY, Color.Red);
-                Raylib.DrawText(component.Name, posX, posY, 16, Color.Red);
-            }
 
             render?.Invoke(deltaTime);
 
